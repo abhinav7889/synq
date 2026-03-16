@@ -19,7 +19,7 @@ export function Hero({
   title,
   titleHighlight,
   description,
-  primaryCta = { text: "Get Started", href: "/checkout-demo" },
+  primaryCta = { text: "Start for Free", href: "/checkout-demo" },
   secondaryCta = { text: "View SDK", href: "/sdk-demo", icon: <Code2 size={18} /> },
   showDashboard = true
 }: HeroProps) {
