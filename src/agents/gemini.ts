@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai"
 
-// GEMINI_API_KEY is required for AI agents
+// GEMINI_API_KEY must be set in .env.local
 
 const genAI = process.env.GEMINI_API_KEY 
   ? new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
