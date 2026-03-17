@@ -164,3 +164,5 @@ export function Navbar({
   )
 }
 
+
+// mobile nav: close menu on route change
