@@ -57,3 +57,5 @@ export async function triggerWebhook(event: string, data: any) {
     console.error('Error triggering webhook:', error)
   }
 }
+
+// validate hmac signature before processing event
