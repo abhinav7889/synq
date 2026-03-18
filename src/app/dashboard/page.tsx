@@ -517,3 +517,5 @@ export default function DashboardPage() {
   )
 }
 
+
+// TODO: add skeleton loader for initial data fetch
