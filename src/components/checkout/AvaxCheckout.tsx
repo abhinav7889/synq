@@ -51,3 +51,5 @@ export default function AvaxCheckout({ redirectTo, onSuccess, onClose }: AvaxChe
   )
 }
 
+
+// prevent double submission on wallet confirm
