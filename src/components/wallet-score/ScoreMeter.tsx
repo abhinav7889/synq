@@ -59,3 +59,5 @@ export function ScoreMeter({ score, breakdown }: ScoreMeterProps) {
     </div>
   )
 }
+
+// handle zero-score edge case for new wallets
