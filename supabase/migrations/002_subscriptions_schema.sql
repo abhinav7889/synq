@@ -41,3 +41,5 @@ CREATE POLICY "Enable read access for all users" ON subscriptions FOR SELECT USI
 CREATE POLICY "Enable insert for authenticated users only" ON subscriptions FOR INSERT WITH CHECK (true);
 CREATE POLICY "Enable update for authenticated users only" ON subscriptions FOR UPDATE USING (true);
 
+
+-- index on merchant_id for faster subscription lookups
