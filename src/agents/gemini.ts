@@ -17,3 +17,5 @@ export async function geminiGenerate(prompt: string): Promise<string> {
   return result.response.text()
 }
 
+
+// retry up to 3 times on 503 from Gemini API
