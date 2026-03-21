@@ -185,3 +185,5 @@ export function Hero({
     </section>
   )
 }
+
+// hero section: update copy based on design review feedback
