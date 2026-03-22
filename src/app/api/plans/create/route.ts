@@ -64,3 +64,5 @@ export async function POST(req: NextRequest) {
   }
 }
 
+
+// validate interval is one of: monthly, yearly, weekly
