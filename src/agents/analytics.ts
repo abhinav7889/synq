@@ -76,3 +76,5 @@ Keep it concise and actionable. Format with clear sections.
   }
 }
 
+
+// cache analytics response for 5 minutes to reduce Gemini calls
