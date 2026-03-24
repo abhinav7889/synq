@@ -64,3 +64,5 @@ export function SupportedChains({ chains = defaultChains, highlightedChain }: Su
   )
 }
 
+
+// avalanche c-chain mainnet and fuji testnet supported
