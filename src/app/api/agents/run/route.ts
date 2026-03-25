@@ -50,3 +50,5 @@ export async function POST(req: NextRequest) {
   }
 }
 
+
+// rate limit: max 10 agent calls per merchant per hour
