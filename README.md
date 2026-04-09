@@ -10,6 +10,11 @@
 [![Solidity](https://img.shields.io/badge/Solidity-0.8.20-gray)](https://soliditylang.org)
 
 ---
+## Screenshots
+![subscription_dashboard](https://github.com/user-attachments/assets/c10f5c72-c0f2-4321-883c-fe014a45a117)
+![home_page](https://github.com/user-attachments/assets/25ffd710-45ef-488c-b20c-61d42db94604)
+![dashboard](https://github.com/user-attachments/assets/0cf63e49-eda2-4ff8-b400-ca4a2ed44444)
+![ai_agent_dashboard](https://github.com/user-attachments/assets/a48c1ae4-75ef-42e5-856e-3d5698f5fada)
 
 ## ✨ Features
 
