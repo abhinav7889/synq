@@ -2,10 +2,9 @@ name: SYNQ Pipeline
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
     branches: [master]
-  workflow_dispatch:
 
 jobs:
   install:
@@ -20,20 +19,13 @@ jobs:
           node-version: 20
 
       - name: Install app dependencies
-        # Real: npm ci --prefer-offline
-        run: sleep 20
+        run: npm ci --prefer-offline
 
       - name: Install SDK dependencies
-        # Real: cd sdk && npm ci && cd ..
-        run: sleep 10
+        run:  cd sdk && npm ci && cd ..
 
       - name: Verify lockfile integrity
-        # Real: npm ls --all --json > /dev/null 2>&1
-        run: sleep 8
-
-      - name: Cache node_modules
-        # Real: uses actions/cache with node_modules path
-        run: sleep 7
+        run:  npm ls --all --json > /dev/null 2>&1
 
   lint:
     name: "2 - Lint & Type Check"
@@ -43,16 +35,13 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Run ESLint
-        # Real: npx eslint src/ --max-warnings 0
-        run: sleep 15
+        run: npx eslint src/ --max-warnings 0
 
       - name: TypeScript check (app)
-        # Real: npx tsc --noEmit
-        run: sleep 15
+        run: npx tsc --noEmit
 
       - name: TypeScript check (SDK)
-        # Real: cd sdk && npx tsc --noEmit
-        run: sleep 10
+        run: cd sdk && npx tsc --noEmit
 
   build-sdk:
     name: "3 - Build SDK"
@@ -62,16 +51,13 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Compile SDK TypeScript
-        # Real: cd sdk && npm run build
-        run: sleep 15
+        run: cd sdk && npm run build
 
       - name: Generate type declarations
-        # Real: part of tsc --declaration
-        run: sleep 10
+        run: tsc --declaration
 
       - name: Validate SDK exports
-        # Real: node -e "import('./sdk/dist/index.js')"
-        run: sleep 10
+        run: node -e "import('./sdk/dist/index.js')"
 
   build-app:
     name: "4 - Build Next.js App"
@@ -81,16 +67,11 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Next.js production build (Turbopack)
-        # Real: npm run build
-        run: sleep 25
+        run: npm run build
 
       - name: Generate static pages (26 routes)
-        # Real: part of next build
-        run: sleep 15
-
-      - name: Optimize bundles & assets
-        # Real: part of next build - tree shaking, minification
-        run: sleep 15
+        # Real: part of 
+        run: next build
 
   db-check:
     name: "5 - Database Migration Check"
@@ -100,20 +81,16 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Connect to Supabase
-        # Real: npx supabase db push --dry-run --db-url $DATABASE_URL
-        run: sleep 8
+        run: npx supabase db push --dry-run --db-url $DATABASE_URL
 
       - name: Validate 001_initial_schema.sql
-        # Real: psql $DATABASE_URL -f supabase/migrations/001_initial_schema.sql --dry-run
-        run: sleep 7
+        run:  psql $DATABASE_URL -f supabase/migrations/001_initial_schema.sql --dry-run
 
       - name: Validate 002_subscriptions_schema.sql
-        # Real: psql $DATABASE_URL -f supabase/migrations/002_subscriptions_schema.sql --dry-run
-        run: sleep 7
+        run: psql $DATABASE_URL -f supabase/migrations/002_subscriptions_schema.sql --dry-run
 
       - name: Validate 003_add_invoice_field.sql
-        # Real: psql $DATABASE_URL -f supabase/migrations/003_add_invoice_field.sql --dry-run
-        run: sleep 8
+        run: psql $DATABASE_URL -f supabase/migrations/003_add_invoice_field.sql --dry-run
 
   api-tests:
     name: "6 - API Integration Tests"
@@ -123,28 +100,22 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Test POST /api/payments/verify
-        # Real: curl -sf -X POST http://localhost:3000/api/payments/verify -d '{"txHash":"0x..."}' | jq .
-        run: sleep 8
+        run: curl -sf -X POST http://localhost:3000/api/payments/verify -d '{"txHash":"0x..."}' | jq .
 
       - name: Test POST /api/merchants/verify
-        # Real: curl -sf -X POST http://localhost:3000/api/merchants/verify -H "x-api-key: test" | jq .
-        run: sleep 8
+        run: curl -sf -X POST http://localhost:3000/api/merchants/verify -H "x-api-key: test" | jq .
 
       - name: Test POST /api/subscriptions/create
-        # Real: curl -sf -X POST http://localhost:3000/api/subscriptions/create -d '{"planId":"..."}' | jq .
-        run: sleep 8
+        run: curl -sf -X POST http://localhost:3000/api/subscriptions/create -d '{"planId":"..."}' | jq .
 
       - name: Test GET /api/plans/list
-        # Real: curl -sf http://localhost:3000/api/plans/list?merchantId=test | jq .
-        run: sleep 8
+        run: curl -sf http://localhost:3000/api/plans/list?merchantId=test | jq .
 
       - name: Test POST /api/agents/run
-        # Real: curl -sf -X POST http://localhost:3000/api/agents/run -d '{"prompt":"test"}' | jq .
-        run: sleep 8
+        run: curl -sf -X POST http://localhost:3000/api/agents/run -d '{"prompt":"test"}' | jq .
 
       - name: Test POST /api/access/verify
-        # Real: curl -sf -X POST http://localhost:3000/api/access/verify -d '{"wallet":"0x..."}' | jq .
-        run: sleep 10
+        run: curl -sf -X POST http://localhost:3000/api/access/verify -d '{"wallet":"0x..."}' | jq .
 
   deploy:
     name: "7 - Deploy to Vercel"
@@ -155,13 +126,10 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Upload build artifacts
-        # Real: npx vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
-        run: sleep 10
+        run: npx vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Wait for deployment ready
-        # Real: npx vercel inspect $DEPLOY_URL --wait --token=${{ secrets.VERCEL_TOKEN }}
-        run: sleep 10
+        run: npx vercel inspect $DEPLOY_URL --wait --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Post-deploy health check
-        # Real: curl -sf https://synq-khaki.vercel.app/api/payments/verify > /dev/null
-        run: sleep 5
+        run: curl -sf https://synq-khaki.vercel.app/api/payments/verify > /dev/null
